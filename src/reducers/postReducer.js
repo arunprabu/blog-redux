@@ -22,7 +22,6 @@ const postReducer = (state = [], action) => {
     case EDIT_POST: 
       return state;  // not implemented yet
     case DELETE_POST:
-      debugger;
       return action.post;
     default:
       return state;
