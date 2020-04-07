@@ -533,7 +533,7 @@ Step 30:
 
 
 
-
+Note: Add Toastr (react-redux-toastr )
 
 
 

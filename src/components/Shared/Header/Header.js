@@ -34,7 +34,7 @@ function Header() {
         </ul>
       </div>
     </nav>
-  );
+  )
 }
     
 export default Header;

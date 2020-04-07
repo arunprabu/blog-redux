@@ -15,7 +15,6 @@ class PostList extends Component {
     let posts = null;
     if(this.props.posts && this.props.posts.length > 0){
       posts = this.props.posts.map((post) =>{
-        console.log(post);
         return(
           <Post id={post.id} 
             title={post.title} 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ADD_POST, GET_POSTS, GET_POST_BY_ID, DELETE_POST } from "../actions/types";
+import { ADD_POST, GET_POSTS, GET_POST_BY_ID, DELETE_POST, EDIT_POST } from "../actions/types";
 
 const POSTS_API_URL = 'https://jsonplaceholder.typicode.com/posts';
 
@@ -60,6 +60,22 @@ export const getPostById = (postId) => {
       .catch(error => {
         throw(error);
       });
+  };
+};
+
+//Update post
+export const editPost = (data) => {
+  return (dispatch) => {
+      return axios.put(POSTS_API_URL+'/'+data.id, data )
+          .then(response => {
+            dispatch({
+              type: EDIT_POST,
+              post: response.data
+            })
+          })
+          .catch(error => {
+              throw (error);
+          });
   };
 };
 

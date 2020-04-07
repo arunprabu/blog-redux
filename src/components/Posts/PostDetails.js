@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getPostById, deletePost } from '../../services/postService';
+import { getPostById, deletePost, editPost } from '../../services/postService';
 import { Link } from 'react-router-dom';
 
 class PostDetails extends Component {
@@ -17,13 +17,13 @@ class PostDetails extends Component {
     const title = this.getTitle.value;
     const body = this.getContent.value;
     const data = {
-      id: new Date(),
+      id: this.props.post.id,
       title,
       body
     }
     console.log(data);
     
-    //this.props.dispatch(createPost( data ));
+    this.props.dispatch(editPost( data ));
     this.getTitle.value = '';
     this.getContent.value = '';
   }
@@ -33,7 +33,6 @@ class PostDetails extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className='container'>
         <h1>Post Details</h1>
@@ -78,17 +77,21 @@ class PostDetails extends Component {
                     <form onSubmit={this.handleSubmit}>
                       <input required type="text"
                         placeholder="Enter Post Title"
-                        className='form-control' ref={(input) => this.getTitle = input} /><br />
+                        className='form-control' 
+                        defaultValue={this.props.post.title} 
+                        ref={(input) => this.getTitle = input} /><br />
                       <textarea required rows="5" cols="28"
                         placeholder="Enter Post" 
-                        className='form-control' ref={(input) => this.getContent = input} /><br />
+                        className='form-control'
+                        defaultValue={this.props.post.body} 
+                        ref={(input) => this.getContent = input} /><br />
                       <button className='btn btn-primary' type='submit'>Save Changes</button>
                     </form>
                   </div>
                 </div>
               </div>
             </div>
-            </div>
+          </div>
           : 
           <div>
             <div className='alert alert-success'>
