@@ -20,7 +20,6 @@ const postReducer = (state = [], action) => {
     case GET_POST_BY_ID: 
       return action.post; 
     case EDIT_POST: 
-      debugger;
       return action.post;  
     case DELETE_POST:
       return action.post;

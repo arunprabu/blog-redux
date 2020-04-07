@@ -531,9 +531,103 @@ Step 29:
 Step 30: 
   We have to work on update operation. 
 
+  In PostDetails.js,
+  have the edit button to open bootstrap modal
+    <button className='btn btn-primary' 
+    data-toggle='modal' 
+    data-target='#editModal'>Edit</button> &nbsp;
 
+  And have the modal code,
+  <div className="modal fade" id="editModal"
+      tabIndex={-1}
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div className="modal-dialog" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="exampleModalLabel">
+              Update Post
+            </h5>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="modal"
+              aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div className="modal-body">
+            <form onSubmit={this.handleSubmit}>
+              <input required type="text"
+                placeholder="Enter Post Title"
+                className='form-control' 
+                defaultValue={this.props.post.title} 
+                ref={(input) => this.getTitle = input} /><br />
+              <textarea required rows="5" cols="28"
+                placeholder="Enter Post" 
+                className='form-control'
+                defaultValue={this.props.post.body} 
+                ref={(input) => this.getContent = input} /><br />
+              <button className='btn btn-primary' type='submit'>Save Changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+Step 31: 
+  Define handleSubmit function there and capture the form data,
+  then dispatch ac action to editPost 
+    handleSubmit = (e) => {
+      e.preventDefault();
+      const title = this.getTitle.value;
+      const body = this.getContent.value;
+      const data = {
+        id: this.props.post.id,
+        title,
+        body
+      }
+      console.log(data);
+      
+      this.props.dispatch(editPost( data ));
+      this.getTitle.value = '';
+      this.getContent.value = '';
+    }
+
+Step 32: 
+  For the above to work, define editPost method in postService.js
+    //Update post
+    export const editPost = (data) => {
+      return (dispatch) => {
+        return axios.put(POSTS_API_URL+'/'+data.id, data )
+          .then(response => {
+            dispatch({
+              type: EDIT_POST,
+              post: response.data
+            })
+          })
+          .catch(error => {
+              throw (error);
+          });
+      };
+    };
+
+Step 33: Finally, work with the switch case in postReducer.js 
+  case EDIT_POST: 
+      return action.post;
+
+That's all. CRUD Operation is over!
 
 Note: Add Toastr (react-redux-toastr )
+
+Other Important Notes:
+1) How to Include Bootstrap in React App?
+    npm i bootstrap --save 
+    then,
+    in index.js 
+    import 'bootstrap/dist/css/bootstrap.css'
 
 
 
